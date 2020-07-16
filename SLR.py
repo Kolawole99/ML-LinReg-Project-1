@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import pylab as pl
 import numpy as np
+from sklearn import linear_model
 #%matplotlib inline #needed in jupyter notebooks
 
 
@@ -55,7 +56,32 @@ plt.show()
 
 
 
-#===================================TRAIN/TEST SPLIT==============================
+#========================================TRAIN/TEST SPLIT==============================
 msk = np.random.rand(len(df)) < 0.8
 train = cdf[msk]
 test = cdf[~msk]
+
+
+
+#==================================SIMPLE LINEAR REGRESSION MODEL=============================
+#Train data distribution
+plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS,  color='blue')
+plt.xlabel("Engine size")
+plt.ylabel("Emission")
+plt.show()
+#Using sklearn package to model data.
+regr = linear_model.LinearRegression()
+train_x = np.asanyarray(train[['ENGINESIZE']])
+train_y = np.asanyarray(train[['CO2EMISSIONS']])
+regr.fit (train_x, train_y)
+# The coefficients
+print ('Coefficients: ', regr.coef_)
+print ('Intercept: ',regr.intercept_)
+#Plot outputs​
+plt.scatter(train.ENGINESIZE, train.CO2EMISSIONS,  color='blue')
+plt.plot(train_x, regr.coef_[0][0]*train_x + regr.intercept_[0], '-r')
+plt.xlabel("Engine size")
+plt.ylabel("Emission")
+
+
+#========================================EVALUATION========================================
