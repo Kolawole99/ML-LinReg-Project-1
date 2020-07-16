@@ -47,3 +47,15 @@ plt.scatter(cdf.ENGINESIZE, cdf.CO2EMISSIONS,  color='blue')
 plt.xlabel("Engine size")
 plt.ylabel("Emission")
 plt.show()
+
+plt.scatter(cdf.CYLINDERS, cdf.CO2EMISSIONS,  color='blue')
+plt.xlabel("Cylinders")
+plt.ylabel("Emission")
+plt.show()
+
+
+
+#===================================TRAIN/TEST SPLIT==============================
+msk = np.random.rand(len(df)) < 0.8
+train = cdf[msk]
+test = cdf[~msk]
