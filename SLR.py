@@ -4,6 +4,7 @@ import pandas as pd
 import pylab as pl
 import numpy as np
 from sklearn import linear_model
+from sklearn.metrics import r2_score
 #%matplotlib inline #needed in jupyter notebooks
 
 
@@ -86,3 +87,10 @@ plt.show()
 
 
 #========================================EVALUATION========================================
+test_x = np.asanyarray(test[['ENGINESIZE']])
+test_y = np.asanyarray(test[['CO2EMISSIONS']])
+test_y_hat = regr.predict(test_x)
+
+print("Mean absolute error: %.2f" % np.mean(np.absolute(test_y_hat - test_y)))
+print("Residual sum of squares (MSE): %.2f" % np.mean((test_y_hat - test_y) ** 2))
+print("R2-score: %.2f" % r2_score(test_y_hat , test_y) )
